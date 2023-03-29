@@ -1,0 +1,35 @@
+---
+# defaults file for ansible-netplan
+netplan_config_file: /etc/netplan/00-installer-config.yaml
+
+# switch to enable/disable the role completely
+netplan_enabled: true
+
+# Configured devices get handled by systemd-networkd by default, unless explicitly marked as managed by a specific renderer (NetworkManager)
+netplan_renderer:
+
+netplan_configuration:
+  network:
+       version: 2
+       ethernets:
+         enp0s3:
+           dhcp4: true
+         enp0s8:
+           addresses:
+             - 192.168.250.10/24
+             - 192.168.250.11/24
+           nameservers:
+             addresses:
+               - 10.0.2.3
+               - 8.8.8.8
+               - 8.8.4.4
+  gateway4: 192.168.250.1
+  
+netplan_remove_existing: false
+
+netplan_packages:
+  - nplan
+  - netplan.io
+  - bridge-utils
+netplan_check_install: True
+netplan_apply: True
